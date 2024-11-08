@@ -1,1 +1,1 @@
-export { default as DatabaseConfig } from './config';
+export { default as DatabaseModule } from './database.module';
