@@ -2,7 +2,12 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import User from './user.entity';
-import { CreateUserDto, UniqueUserKeysDto, UpdateUserDto } from './dtos';
+import {
+  CreateUserDto,
+  UniqueUserKeysDto,
+  UpdateUserDto,
+  UserGetProjections,
+} from './dtos';
 
 @Injectable()
 export default class UserService {
@@ -11,8 +16,10 @@ export default class UserService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async getAll(): Promise<User[]> {
-    return this.usersRepository.find();
+  async getAll(): Promise<UserGetProjections.SimpleUserInfo[]> {
+    return this.usersRepository.find({
+      select: ['id', 'name'],
+    });
   }
 
   private async haveUniqueKeysConflict(

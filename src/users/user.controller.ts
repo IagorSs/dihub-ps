@@ -9,15 +9,14 @@ import {
   Put,
 } from '@nestjs/common';
 import UserService from './user.service';
-import User from './user.entity';
-import { CreateUserDto, UpdateUserDto } from './dtos';
+import { CreateUserDto, UpdateUserDto, UserGetProjections } from './dtos';
 
 @Controller('users')
 export default class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  async getAll(): Promise<User[]> {
+  async getAll(): Promise<UserGetProjections.SimpleUserInfo[]> {
     return this.userService.getAll();
   }
 
