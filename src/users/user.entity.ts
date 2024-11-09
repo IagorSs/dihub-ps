@@ -12,7 +12,6 @@ export default class User {
   cpf: string;
   // TODO change to CPF type
   // - Object Value
-  // - Add check on constructor
   // - Add check on DB
 
   @Column()
@@ -24,9 +23,4 @@ export default class User {
 
   @Column()
   password: string;
-  // TODO change to Password type
-  // - Object Value
-  // - checks: min qtde, min letters, others mins
-  // - Add check on constructor
-  // - Add check on DB
 }
