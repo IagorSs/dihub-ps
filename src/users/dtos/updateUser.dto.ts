@@ -9,7 +9,7 @@ export default class UpdateUserDto {
   @IsOptional()
   @IsNotEmpty()
   @IsString()
-  name: string;
+  name?: string;
 
   @IsOptional()
   @IsStrongPassword({
@@ -19,5 +19,5 @@ export default class UpdateUserDto {
     minSymbols: 1,
     minUppercase: 1,
   })
-  password: string;
+  password?: string;
 }
