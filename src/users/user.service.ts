@@ -22,6 +22,20 @@ export default class UserService {
     });
   }
 
+  async getOne(userId: number): Promise<UserGetProjections.SpecificUserInfo> {
+    const userExists = await this.userExists(userId);
+
+    if (!userExists)
+      throw new HttpException("User don't exists", HttpStatus.BAD_REQUEST);
+
+    return this.usersRepository.findOne({
+      where: {
+        id: userId,
+      },
+      select: ['cpf', 'email', 'id', 'name'],
+    });
+  }
+
   private async haveUniqueKeysConflict(
     uniqueUserKeys: UniqueUserKeysDto,
   ): Promise<boolean> {

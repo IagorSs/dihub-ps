@@ -20,6 +20,13 @@ export default class UserController {
     return this.userService.getAll();
   }
 
+  @Get('/:id')
+  async getOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<UserGetProjections.SpecificUserInfo> {
+    return this.userService.getOne(id);
+  }
+
   @Post()
   async create(@Body() createUserDto: CreateUserDto): Promise<void> {
     await this.userService.create({
