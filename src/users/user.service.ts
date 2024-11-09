@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import User from './user.entity';
-import { CreateUserDto, UniqueUserKeysDto } from './dtos';
+import { CreateUserDto, UniqueUserKeysDto, UpdateUserDto } from './dtos';
 
 @Injectable()
 export default class UserService {
@@ -38,5 +38,9 @@ export default class UserService {
       );
 
     await this.usersRepository.insert(createUserDto);
+  }
+
+  async update(userId: number, updateUserDto: UpdateUserDto) {
+    await this.usersRepository.update(userId, updateUserDto);
   }
 }

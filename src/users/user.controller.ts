@@ -1,7 +1,15 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+} from '@nestjs/common';
 import UserService from './user.service';
 import User from './user.entity';
-import { CreateUserDto } from './dtos';
+import { CreateUserDto, UpdateUserDto } from './dtos';
 
 @Controller('users')
 export default class UserController {
@@ -18,5 +26,13 @@ export default class UserController {
       ...createUserDto,
       cpf: createUserDto.cpf.replaceAll('.', '').replaceAll('-', ''),
     });
+  }
+
+  @Put('/:id')
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<void> {
+    await this.userService.update(id, updateUserDto);
   }
 }
