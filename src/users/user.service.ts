@@ -25,6 +25,16 @@ export default class UserService {
     return !!userFounded;
   }
 
+  private async userExists(userId: number): Promise<boolean> {
+    const userFounded = await this.usersRepository.findOne({
+      where: {
+        id: userId,
+      },
+    });
+
+    return !!userFounded;
+  }
+
   async create(createUserDto: CreateUserDto): Promise<void> {
     const haveUniqueKeysConflict = await this.haveUniqueKeysConflict({
       cpf: createUserDto.cpf,
@@ -42,5 +52,14 @@ export default class UserService {
 
   async update(userId: number, updateUserDto: UpdateUserDto) {
     await this.usersRepository.update(userId, updateUserDto);
+  }
+
+  async deleteUser(userId: number) {
+    const userExists = await this.userExists(userId);
+
+    if (!userExists)
+      throw new HttpException("User don't exists", HttpStatus.BAD_REQUEST);
+
+    await this.usersRepository.delete(userId);
   }
 }

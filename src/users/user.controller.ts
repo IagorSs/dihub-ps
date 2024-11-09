@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -34,5 +35,10 @@ export default class UserController {
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<void> {
     await this.userService.update(id, updateUserDto);
+  }
+
+  @Delete('/:id')
+  async deleteUser(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    await this.userService.deleteUser(id);
   }
 }
