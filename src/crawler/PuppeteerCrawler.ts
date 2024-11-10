@@ -1,5 +1,5 @@
 import puppeteer, { Browser, ElementHandle, Page } from 'puppeteer';
-import { Crawler, CustomElementHandle } from './Crawler';
+import { Crawler, CrawlerFactory, CustomElementHandle } from './Crawler';
 
 class PuppeteerElementHandle implements CustomElementHandle {
   constructor(
@@ -21,16 +21,8 @@ class PuppeteerElementHandle implements CustomElementHandle {
   }
 }
 
-export default class PuppeteerCrawler implements Crawler {
-  static async create(rootPage: string) {
-    const browser = await puppeteer.launch({ headless: true });
-    const page = await browser.newPage();
-    await page.goto(rootPage);
-
-    return new PuppeteerCrawler(browser, page, rootPage);
-  }
-
-  private constructor(
+export class PuppeteerCrawler implements Crawler {
+  constructor(
     private readonly browser: Browser,
     private readonly page: Page,
     public readonly rootPage: string,
@@ -53,10 +45,17 @@ export default class PuppeteerCrawler implements Crawler {
     );
   }
 
-  /**
-   * Don't use this object after use this method
-   */
-  async closeBrowser() {
+  async finishJobs() {
     await this.browser.close();
+  }
+}
+
+export class PuppeteerCrawlerFactory implements CrawlerFactory {
+  async create(rootPage: string): Promise<PuppeteerCrawler> {
+    const browser = await puppeteer.launch({ headless: true });
+    const page = await browser.newPage();
+    await page.goto(rootPage);
+
+    return new PuppeteerCrawler(browser, page, rootPage);
   }
 }
