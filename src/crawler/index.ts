@@ -1,2 +1,2 @@
-export * from './PuppeteerCrawler';
-export * from './Crawler';
+export * from './puppeteer';
+export * from './interfaces';
