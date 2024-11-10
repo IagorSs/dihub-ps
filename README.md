@@ -48,6 +48,13 @@
 ### Puppeteer
 
 - Quais são as principais aplicações do Puppeteer e como ele pode ser utilizado para realizar web scraping?
+  
+  Essa biblioteca é utilizada para navegar pela web de forma semelhante a como um usuário faria. Com isso ela tem como principais aplicações:
+  - Busca de dados que não são facilmente disponibilizados para aplicações (Scraping)
+  - Realização de testes e2e
+  - Automação de tarefas que incluem interagir com sites
+  
+  A forma de buscar os dados é navegar pelos sites de interesse, extrair os dados relevantes do código HTML disponibilizado e direcionar esses dados para algum lugar de mais fácil acesso, costumeiramente um banco de dados para ser consumido por uma API.
 
 ---
 
