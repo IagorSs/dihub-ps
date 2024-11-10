@@ -4,8 +4,28 @@
 
 ### Arquitetura e Design de Software
 
-- Descreva como você organizaria um projeto usando NestJS em uma arquitetura de microserviços. Quais seriam os principais componentes e como eles interagiriam?
+- Descreva como você organizaria um projeto usando NestJS em uma arquitetura de microsserviços. Quais seriam os principais componentes e como eles interagiriam?
+  
+  Para planejar isso vou seguir os seguintes princípios que penso serem os melhores na maior parte dos cenários:
+  - SOLID
+  - Evitar duplicações de código
+  - Autonomia completa dos microsserviços
+  - Escalabilidade organizacional de time de forma sustentável
+  - Buscar um meio termo saudável entre o *Over Engineering* e o código "sem qualidade mas que funciona"
+
+  Visando isso pensaria as seguintes práticas a serem adotadas durante o desenvolvimento:
+  - Templates para desenvolvimento de microsserviços, já estabelecendo uma arquitetura que vá atender a vários escopos e especificações padrões de infra, pipelines de deploy, etc.
+  - Bibliotecas com código comum, como por exemplo middlewares de autenticação, e disponibilizar via um registry privado do npm como o gitlab, dessa forma isolando o código comum e disponibilizando para cada microsserviço diferentes versões do mesmo para auxiliar na manutenibilidade.
+  - Apesar do ponto acima, cada microsserviço implementar sua interface de comunicação com outros microsserviços e com api's externas
+  - Cada microsserviço implementar um escopo que faça sentido para a regra de negócio e suas dependências técnicas, evitando criação desnecessária de microsserviços e monolitos disfarçados de microsserviços.
+  
+  Para a comunicação entre microsserviços eu pensaria uma arquitetura com mensageria e voltaria as funcionalidades para rotinas assíncronas garantindo as melhores práticas de programação de serem aplicadas.
+
 - Como você abordaria o gerenciamento de estado e a comunicação entre serviços em uma aplicação distribuída?
+  
+  **Obs:** Vou responder essa pergunta entendendo que ela foi em relação ao contexto de backend com microsserviços.
+
+  O principio *Single Responsibility* responde bem a esse problema, então minha proposta visando-o seria de isolar totalmente a gestão do CRUD de uma entidade a um microsserviço, qual somente esse teria acesso ao banco de dados que cuida do ACID da entidade seguindo as boas práticas de arquitetura de banco. Para otimizações de performance nesse contexto que poderia ficar defasado pelo atraso na comunicação entre microsserviços eu pensaria na utilização de cache de respostas de API e de banco, além de um sistema interno de acesso a banco com conexões que se mantém abertas e queries otimizadas via índice.
 
 ### TypeScript
 
